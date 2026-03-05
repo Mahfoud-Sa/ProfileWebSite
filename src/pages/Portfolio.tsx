@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { getPortfolio, PortfolioItem as PortfolioItemType } from '../services/portfolioService';
 import PortfolioItem from '../components/PortfolioItem';
 import { Loader2 } from 'lucide-react';
@@ -9,8 +10,15 @@ const Portfolio = () => {
   const [filteredItems, setFilteredItems] = useState<PortfolioItemType[]>([]);
   const [activeCategory, setActiveCategory] = useState('All');
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
-  const categories = ['All', 'Web App', 'Mobile App', 'UI/UX Design', 'Branding'];
+  const categories = [
+    { key: 'All', label: t('portfolio.categories.all') },
+    { key: 'Web App', label: t('portfolio.categories.webApp') },
+    { key: 'Mobile App', label: t('portfolio.categories.mobileApp') },
+    { key: 'UI/UX Design', label: t('portfolio.categories.uiUx') },
+    { key: 'Branding', label: t('portfolio.categories.branding') }
+  ];
 
   useEffect(() => {
     const fetchPortfolio = async () => {
@@ -38,9 +46,9 @@ const Portfolio = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <span className="text-indigo-600 font-bold uppercase tracking-widest text-xs">Showcase</span>
+            <span className="text-indigo-600 font-bold uppercase tracking-widest text-xs">{t('portfolio.showcase')}</span>
             <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mt-4 mb-8">
-              Our Latest <span className="text-indigo-600">Creations</span>
+              {t('portfolio.latestCreations')}
             </h1>
           </motion.div>
 
@@ -48,15 +56,15 @@ const Portfolio = () => {
           <div className="flex flex-wrap justify-center gap-3 mt-12">
             {categories.map((cat) => (
               <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
+                key={cat.key}
+                onClick={() => setActiveCategory(cat.key)}
                 className={`px-6 py-3 rounded-2xl text-sm font-bold transition-all duration-300 ${
-                  activeCategory === cat
+                  activeCategory === cat.key
                     ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200'
                     : 'bg-white text-slate-600 hover:bg-slate-100'
                 }`}
               >
-                {cat}
+                {cat.label}
               </button>
             ))}
           </div>

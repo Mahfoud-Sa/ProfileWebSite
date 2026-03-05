@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { getServices, Service } from '../services/serviceService';
 import ServiceCard from '../components/ServiceCard';
 import { Loader2 } from 'lucide-react';
@@ -7,6 +8,7 @@ import { Loader2 } from 'lucide-react';
 const Services = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -25,12 +27,12 @@ const Services = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <span className="text-indigo-600 font-bold uppercase tracking-widest text-xs">Our Expertise</span>
+            <span className="text-indigo-600 font-bold uppercase tracking-widest text-xs">{t('services.expertise')}</span>
             <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mt-4 mb-8">
-              Solutions that <span className="text-indigo-600">scale with your vision</span>.
+              {t('services.scaleVision')}
             </h1>
             <p className="text-lg text-slate-600 leading-relaxed">
-              We offer a wide range of digital services designed to help businesses thrive in the modern world. From custom software to cloud infrastructure, we've got you covered.
+              {t('services.expertiseDesc')}
             </p>
           </motion.div>
         </div>
@@ -56,19 +58,13 @@ const Services = () => {
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">Custom Development Process</h2>
+              <h2 className="text-3xl font-bold text-slate-900 mb-6">{t('services.processTitle')}</h2>
               <p className="text-slate-600 mb-8">
-                We follow a rigorous, transparent development process that ensures quality at every step. From discovery to deployment, we keep you in the loop.
+                {t('services.processDesc')}
               </p>
               <ul className="space-y-4">
-                {[
-                  'Discovery & Planning',
-                  'UI/UX Design & Prototyping',
-                  'Agile Development Sprints',
-                  'Quality Assurance & Testing',
-                  'Deployment & Maintenance'
-                ].map((step, i) => (
-                  <li key={step} className="flex items-center space-x-3">
+                {(t('services.steps', { returnObjects: true }) as string[]).map((step, i) => (
+                  <li key={step} className="flex items-center space-x-3 rtl:space-x-reverse">
                     <span className="w-8 h-8 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center text-xs font-bold">
                       {i + 1}
                     </span>

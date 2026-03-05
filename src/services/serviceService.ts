@@ -17,21 +17,27 @@ export const getServices = async (): Promise<Service[]> => {
     return [
       {
         id: 1,
-        title: 'Web Development',
-        description: 'Building modern, responsive, and high-performance websites.',
-        icon: 'Code',
-      },
-      {
-        id: 2,
-        title: 'Mobile Apps',
-        description: 'Creating cross-platform mobile applications for iOS and Android.',
+        title: 'Mobile Application Development',
+        description: 'Building high-performance native and cross-platform mobile apps for iOS and Android.',
         icon: 'Smartphone',
       },
       {
+        id: 2,
+        title: 'Website Development',
+        description: 'Creating modern, responsive, and SEO-optimized websites using React and Next.js.',
+        icon: 'Globe',
+      },
+      {
         id: 3,
-        title: 'Cloud Solutions',
-        description: 'Scalable cloud infrastructure and serverless architectures.',
-        icon: 'Cloud',
+        title: 'Systems Integration',
+        description: 'Seamlessly connecting disparate software systems through robust RESTful APIs.',
+        icon: 'Layers',
+      },
+      {
+        id: 4,
+        title: 'UI/UX Design',
+        description: 'Crafting intuitive and visually appealing user interfaces using Figma.',
+        icon: 'Palette',
       },
     ];
   }

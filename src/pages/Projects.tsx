@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { getProjects, Project } from '../services/projectService';
 import ProjectCard from '../components/ProjectCard';
 import { Loader2 } from 'lucide-react';
@@ -7,6 +8,7 @@ import { Loader2 } from 'lucide-react';
 const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -25,12 +27,12 @@ const Projects = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <span className="text-indigo-600 font-bold uppercase tracking-widest text-xs">Our Work</span>
+            <span className="text-indigo-600 font-bold uppercase tracking-widest text-xs">{t('projects.work')}</span>
             <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mt-4 mb-8">
-              Innovative <span className="text-indigo-600">projects</span> that deliver results.
+              {t('projects.innovative')}
             </h1>
             <p className="text-lg text-slate-600 leading-relaxed">
-              Explore our portfolio of successful projects across various industries. Each project represents a unique challenge we solved through technical expertise and creative thinking.
+              {t('projects.workDesc')}
             </p>
           </motion.div>
         </div>

@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Terminal } from 'lucide-react';
+import { Menu, X, Terminal, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,13 +18,18 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const toggleLanguage = () => {
+    const nextLang = i18n.language === 'en' ? 'ar' : 'en';
+    i18n.changeLanguage(nextLang);
+  };
+
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Services', path: '/services' },
-    { name: 'Projects', path: '/projects' },
-    { name: 'Portfolio', path: '/portfolio' },
-    { name: 'Contact', path: '/contact' },
+    { name: t('nav.home'), path: '/' },
+    { name: t('nav.about'), path: '/about' },
+    { name: t('nav.services'), path: '/services' },
+    { name: t('nav.projects'), path: '/projects' },
+    { name: t('nav.portfolio'), path: '/portfolio' },
+    { name: t('nav.contact'), path: '/contact' },
   ];
 
   return (
@@ -33,13 +40,13 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2 rtl:space-x-reverse">
             <Terminal className="h-8 w-8 text-indigo-600" />
             <span className="text-xl font-bold tracking-tight text-slate-900">TechTeam</span>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-8 rtl:space-x-reverse">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -51,16 +58,32 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+            
+            {/* Language Switcher */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center space-x-1 rtl:space-x-reverse text-slate-600 hover:text-indigo-600 transition-colors text-sm font-medium"
+            >
+              <Globe className="h-4 w-4" />
+              <span>{i18n.language === 'en' ? 'العربية' : 'English'}</span>
+            </button>
+
             <Link
               to="/contact"
               className="bg-indigo-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-indigo-700 transition-colors shadow-sm"
             >
-              Get Started
+              {t('nav.getStarted')}
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center space-x-4 rtl:space-x-reverse">
+            <button
+              onClick={toggleLanguage}
+              className="text-slate-600 hover:text-indigo-600 transition-colors"
+            >
+              <Globe className="h-6 w-6" />
+            </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-slate-600 hover:text-slate-900 focus:outline-none"
@@ -101,7 +124,7 @@ const Navbar = () => {
                   onClick={() => setIsOpen(false)}
                   className="block w-full text-center bg-indigo-600 text-white px-5 py-3 rounded-xl text-base font-medium hover:bg-indigo-700 transition-colors"
                 >
-                  Get Started
+                  {t('nav.getStarted')}
                 </Link>
               </div>
             </div>

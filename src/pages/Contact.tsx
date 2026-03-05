@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { Mail, Phone, MapPin, Send, CheckCircle2, Loader2 } from 'lucide-react';
 import { sendContactMessage } from '../services/contactService';
 
@@ -10,6 +11,7 @@ const Contact = () => {
     message: '',
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -33,40 +35,40 @@ const Contact = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
           >
-            <span className="text-indigo-600 font-bold uppercase tracking-widest text-xs">Contact Us</span>
+            <span className="text-indigo-600 font-bold uppercase tracking-widest text-xs">{t('contact.badge')}</span>
             <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mt-4 mb-8">
-              Let's build something <span className="text-indigo-600">extraordinary</span>.
+              {t('contact.title')}
             </h1>
             <p className="text-lg text-slate-600 mb-12 leading-relaxed">
-              Have a project in mind? Or just want to say hello? We'd love to hear from you. Fill out the form and our team will get back to you within 24 hours.
+              {t('contact.description')}
             </p>
 
             <div className="space-y-8">
-              <div className="flex items-start space-x-6">
+              <div className="flex items-start space-x-6 rtl:space-x-reverse">
                 <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center flex-shrink-0">
                   <Mail className="h-6 w-6 text-indigo-600" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900">Email Us</h3>
+                  <h3 className="text-lg font-bold text-slate-900">{t('contact.emailUs')}</h3>
                   <p className="text-slate-600">hello@techteam.com</p>
                 </div>
               </div>
-              <div className="flex items-start space-x-6">
+              <div className="flex items-start space-x-6 rtl:space-x-reverse">
                 <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center flex-shrink-0">
                   <Phone className="h-6 w-6 text-indigo-600" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900">Call Us</h3>
+                  <h3 className="text-lg font-bold text-slate-900">{t('contact.callUs')}</h3>
                   <p className="text-slate-600">+1 (555) 123-4567</p>
                 </div>
               </div>
-              <div className="flex items-start space-x-6">
+              <div className="flex items-start space-x-6 rtl:space-x-reverse">
                 <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center flex-shrink-0">
                   <MapPin className="h-6 w-6 text-indigo-600" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900">Visit Us</h3>
-                  <p className="text-slate-600">123 Tech Avenue, Innovation District<br />San Francisco, CA 94103</p>
+                  <h3 className="text-lg font-bold text-slate-900">{t('contact.visitUs')}</h3>
+                  <p className="text-slate-600 whitespace-pre-line">{t('contact.visitUsAddress')}</p>
                 </div>
               </div>
             </div>
@@ -83,20 +85,20 @@ const Contact = () => {
                 <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-6">
                   <CheckCircle2 className="h-10 w-10 text-emerald-600" />
                 </div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-4">Message Sent!</h2>
-                <p className="text-slate-600">Thank you for reaching out. We'll be in touch soon.</p>
+                <h2 className="text-2xl font-bold text-slate-900 mb-4">{t('contact.form.successTitle')}</h2>
+                <p className="text-slate-600">{t('contact.form.successDesc')}</p>
                 <button
                   onClick={() => setStatus('idle')}
                   className="mt-8 text-indigo-600 font-bold hover:underline"
                 >
-                  Send another message
+                  {t('contact.form.sendAnother')}
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wider">
-                    Full Name
+                    {t('contact.form.name')}
                   </label>
                   <input
                     type="text"
@@ -105,12 +107,12 @@ const Contact = () => {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full bg-white border border-slate-200 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-                    placeholder="John Doe"
+                    placeholder={t('contact.form.placeholderName')}
                   />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wider">
-                    Email Address
+                    {t('contact.form.email')}
                   </label>
                   <input
                     type="email"
@@ -119,12 +121,12 @@ const Contact = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-full bg-white border border-slate-200 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-                    placeholder="john@example.com"
+                    placeholder={t('contact.form.placeholderEmail')}
                   />
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wider">
-                    Your Message
+                    {t('contact.form.message')}
                   </label>
                   <textarea
                     id="message"
@@ -133,7 +135,7 @@ const Contact = () => {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className="w-full bg-white border border-slate-200 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-indigo-500 transition-all resize-none"
-                    placeholder="Tell us about your project..."
+                    placeholder={t('contact.form.placeholderMessage')}
                   ></textarea>
                 </div>
                 <button
@@ -145,8 +147,8 @@ const Contact = () => {
                     <Loader2 className="h-6 w-6 animate-spin" />
                   ) : (
                     <>
-                      Send Message
-                      <Send className="ml-2 h-5 w-5" />
+                      {t('contact.form.send')}
+                      <Send className="ml-2 h-5 w-5 rtl:rotate-180" />
                     </>
                   )}
                 </button>
